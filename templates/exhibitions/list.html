@@ -10,7 +10,8 @@
     {% for ex in current %}
     <div class="bg-white border-2 border-stone-900 rounded p-4">
       <div class="font-medium">{{ ex.title }}</div>
-      <div class="text-sm text-stone-600">{{ ex.venue }}{% if ex.city %}, {{ ex.city }}{% endif %} · {{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
+      <div class="text-sm text-stone-600">{{ ex.venue }}</div>
+      <div class="text-sm text-stone-500">{% if ex.city %}{{ ex.city }} · {% endif %}{{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
       {% if ex.description %}<p class="mt-2 text-sm whitespace-pre-line">{{ ex.description }}</p>{% endif %}
       {% if ex.link %}<a href="{{ ex.link }}" class="text-sm underline">Подробнее →</a>{% endif %}
     </div>
@@ -26,7 +27,8 @@
     {% for ex in upcoming %}
     <div class="bg-white border rounded p-4">
       <div class="font-medium">{{ ex.title }}</div>
-      <div class="text-sm text-stone-600">{{ ex.venue }}{% if ex.city %}, {{ ex.city }}{% endif %} · {{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
+      <div class="text-sm text-stone-600">{{ ex.venue }}</div>
+      <div class="text-sm text-stone-500">{% if ex.city %}{{ ex.city }} · {% endif %}{{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
       {% if ex.description %}<p class="mt-2 text-sm whitespace-pre-line">{{ ex.description }}</p>{% endif %}
       {% if ex.link %}<a href="{{ ex.link }}" class="text-sm underline">Подробнее →</a>{% endif %}
     </div>
@@ -42,7 +44,8 @@
     {% for ex in past %}
     <div class="bg-white border rounded p-4 opacity-90">
       <div class="font-medium">{{ ex.title }}</div>
-      <div class="text-sm text-stone-600">{{ ex.venue }}{% if ex.city %}, {{ ex.city }}{% endif %} · {{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
+      <div class="text-sm text-stone-600">{{ ex.venue }}</div>
+      <div class="text-sm text-stone-500">{% if ex.city %}{{ ex.city }} · {% endif %}{{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
       {% if ex.description %}<p class="mt-2 text-sm whitespace-pre-line">{{ ex.description }}</p>{% endif %}
     </div>
     {% endfor %}
