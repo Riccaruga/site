@@ -4,24 +4,6 @@
 <section class="max-w-6xl mx-auto px-4 py-10">
   <h1 class="text-3xl font-serif mb-6">Галерея</h1>
 
-  <form method="get" class="flex flex-wrap gap-2 mb-6">
-    <select name="series" class="border rounded px-3 py-2" onchange="this.form.submit()">
-      <option value="">Все серии</option>
-      {% for s in series_list %}
-      <option value="{{ s.slug }}" {% if s.slug == active_series %}selected{% endif %}>{{ s.name }}</option>
-      {% endfor %}
-    </select>
-    <select name="year" class="border rounded px-3 py-2" onchange="this.form.submit()">
-      <option value="">Все годы</option>
-      {% for y in years %}
-      <option value="{{ y }}" {% if y|stringformat:"s" == active_year %}selected{% endif %}>{{ y }}</option>
-      {% endfor %}
-    </select>
-    {% if active_series or active_year %}
-    <a href="{% url 'gallery:list' %}" class="border rounded px-3 py-2 hover:bg-stone-100">Сбросить</a>
-    {% endif %}
-  </form>
-
   {% if artworks %}
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     {% for art in artworks %}
@@ -31,7 +13,9 @@
       {% endif %}
       <div class="p-3">
         <div class="font-medium leading-tight">{{ art.title }}</div>
-        <div class="text-sm text-stone-500">{% if art.series %}{{ art.series.name }} · {% endif %}{% if art.year %}{{ art.year }}{% endif %}</div>
+        {% if art.technique %}<div class="text-sm text-stone-500">{{ art.technique }}</div>{% endif %}
+        {% if art.dimensions_display %}<div class="text-sm text-stone-500">{{ art.dimensions_display }}</div>{% endif %}
+        {% if art.year %}<div class="text-sm text-stone-500">{{ art.year }}</div>{% endif %}
       </div>
     </a>
     {% endfor %}
@@ -39,9 +23,9 @@
 
   {% if is_paginated %}
   <div class="flex gap-2 justify-center mt-8">
-    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&series={{ active_series }}&year={{ active_year }}" class="border px-3 py-2 rounded">← Назад</a>{% endif %}
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}" class="border px-3 py-2 rounded">← Назад</a>{% endif %}
     <span class="px-3 py-2 text-sm">Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
-    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&series={{ active_series }}&year={{ active_year }}" class="border px-3 py-2 rounded">Вперёд →</a>{% endif %}
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}" class="border px-3 py-2 rounded">Вперёд →</a>{% endif %}
   </div>
   {% endif %}
   {% else %}

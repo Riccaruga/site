@@ -45,7 +45,8 @@ class GalleryTests(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, "холст, масло")
 
-    def test_filter_by_series(self):
-        url = reverse("gallery:list") + f"?series={self.series.slug}"
+    def test_year_shown_in_list(self):
+        url = reverse("gallery:list")
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "2024")

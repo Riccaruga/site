@@ -21,7 +21,6 @@
     <div>
       <h1 class="text-3xl font-serif mb-2">{{ artwork.title }}</h1>
       <div class="text-stone-600 mb-4">
-        {% if artwork.series %}{{ artwork.series.name }} · {% endif %}
         {% if artwork.year %}{{ artwork.year }} · {% endif %}
         {{ artwork.technique }}
         {% if artwork.dimensions_display %} · {{ artwork.dimensions_display }}{% endif %}

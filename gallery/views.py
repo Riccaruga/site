@@ -1,6 +1,6 @@
 from django.views.generic import DetailView, ListView
 
-from .models import Artwork, Series
+from .models import Artwork
 
 
 class ArtworkListView(ListView):
@@ -10,25 +10,7 @@ class ArtworkListView(ListView):
     paginate_by = 24
 
     def get_queryset(self):
-        qs = Artwork.objects.filter(is_published=True).select_related("series")
-        series_slug = self.request.GET.get("series")
-        year = self.request.GET.get("year")
-        if series_slug:
-            qs = qs.filter(series__slug=series_slug)
-        if year and year.isdigit():
-            qs = qs.filter(year=int(year))
-        return qs
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["series_list"] = Series.objects.all()
-        ctx["years"] = (
-            Artwork.objects.filter(is_published=True, year__isnull=False)
-            .values_list("year", flat=True).distinct().order_by("-year")
-        )
-        ctx["active_series"] = self.request.GET.get("series", "")
-        ctx["active_year"] = self.request.GET.get("year", "")
-        return ctx
+        return Artwork.objects.filter(is_published=True)
 
 
 class ArtworkDetailView(DetailView):
@@ -38,7 +20,7 @@ class ArtworkDetailView(DetailView):
     slug_field = "slug"
 
     def get_queryset(self):
-        return Artwork.objects.filter(is_published=True).select_related("series").prefetch_related("extra_images")
+        return Artwork.objects.filter(is_published=True).prefetch_related("extra_images")
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
