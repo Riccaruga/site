@@ -36,14 +36,9 @@
 {% block content %}{% endblock %}
 </main>
 
-<footer class="border-t mt-12 bg-white">
-  <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-stone-600 flex flex-col md:flex-row gap-2 justify-between">
-    <div>© {% now "Y" %} {% if artist_profile %}{{ artist_profile.name }}{% endif %} — все права защищены.</div>
-    <div class="flex gap-3">
-      {% if artist_profile.email %}<a href="mailto:{{ artist_profile.email }}" class="hover:underline">Email</a>{% endif %}
-      {% if artist_profile.telegram %}<a href="{{ artist_profile.telegram }}" class="hover:underline">Telegram</a>{% endif %}
-      {% if artist_profile.instagram %}<a href="{{ artist_profile.instagram }}" class="hover:underline">Instagram</a>{% endif %}
-    </div>
+<footer class="border-t mt-8 bg-white">
+  <div class="max-w-6xl mx-auto px-4 py-3 text-xs text-stone-500 text-center">
+    <div>© 2026 Александра Архипова</div>
   </div>
 </footer>
 <script src="/static/js/lightbox.js"></script>

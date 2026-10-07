@@ -23,6 +23,20 @@ class Exhibition(models.Model):
     def __str__(self):
         return f"{self.title} — {self.venue}"
 
+    def is_finished(self, today=None):
+        from django.utils import timezone
+        today = today or timezone.now().date()
+        if self.date_end:
+            return self.date_end < today
+        return self.date_start < today
+
+    def is_current(self, today=None):
+        from django.utils import timezone
+        today = today or timezone.now().date()
+        if self.date_start > today:
+            return False
+        return not self.is_finished(today)
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = unique_slugify(self, self.title)

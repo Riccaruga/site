@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="004a4ae2-9c3c-4b6a-942c-d960ec9a2cbe" name="Changes" comment="" />
+    <list default="true" id="004a4ae2-9c3c-4b6a-942c-d960ec9a2cbe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/core/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exhibitions/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/exhibitions/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exhibitions/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/exhibitions/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exhibitions/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/exhibitions/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/core/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/core/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/exhibitions/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/exhibitions/list.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

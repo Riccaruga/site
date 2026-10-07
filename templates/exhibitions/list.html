@@ -4,6 +4,22 @@
 <section class="max-w-4xl mx-auto px-4 py-10">
   <h1 class="text-3xl font-serif mb-6">Выставки</h1>
 
+  <h2 class="text-xl font-medium mb-3">Текущие</h2>
+  {% if current %}
+  <div class="space-y-3 mb-8">
+    {% for ex in current %}
+    <div class="bg-white border-2 border-stone-900 rounded p-4">
+      <div class="font-medium">{{ ex.title }}</div>
+      <div class="text-sm text-stone-600">{{ ex.venue }}{% if ex.city %}, {{ ex.city }}{% endif %} · {{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
+      {% if ex.description %}<p class="mt-2 text-sm whitespace-pre-line">{{ ex.description }}</p>{% endif %}
+      {% if ex.link %}<a href="{{ ex.link }}" class="text-sm underline">Подробнее →</a>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-stone-500 mb-8">Сейчас выставок нет.</p>
+  {% endif %}
+
   <h2 class="text-xl font-medium mb-3">Предстоящие</h2>
   {% if upcoming %}
   <div class="space-y-3 mb-8">

@@ -2,21 +2,14 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
-from django.utils import timezone
-
-from exhibitions.models import Exhibition
 
 from .forms import ContactForm
 from .models import ArtistProfile
 
 
 def home(request):
-    upcoming = Exhibition.objects.filter(
-        is_published=True, date_start__gte=timezone.now().date()
-    ).order_by("date_start")[:3]
     profile = ArtistProfile.objects.first()
     return render(request, "core/home.html", {
-        "upcoming": upcoming,
         "profile": profile,
     })
 
