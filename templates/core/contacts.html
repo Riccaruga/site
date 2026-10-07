@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Контакты — {{ artist_profile.name|default:"Художник" }}{% endblock %}
+{% block content %}
+<section class="max-w-3xl mx-auto px-4 py-12">
+  <h1 class="text-3xl font-serif mb-4">Контакты</h1>
+  <p class="text-stone-600 mb-6">Напишите, если понравилась картина или хотите узнать подробнее. Отвечаю лично.</p>
+
+  {% if profile.email or profile.phone or profile.telegram %}
+  <div class="bg-white border rounded p-4 mb-6 text-sm">
+    {% if profile.email %}<div>Email: <a class="underline" href="mailto:{{ profile.email }}">{{ profile.email }}</a></div>{% endif %}
+    {% if profile.phone %}<div>Телефон: {{ profile.phone }}</div>{% endif %}
+    <div class="flex gap-3 mt-1">
+      {% if profile.telegram %}<a class="underline" href="{{ profile.telegram }}">Telegram</a>{% endif %}
+      {% if profile.instagram %}<a class="underline" href="{{ profile.instagram }}">Instagram</a>{% endif %}
+      {% if profile.whatsapp %}<a class="underline" href="{{ profile.whatsapp }}">WhatsApp</a>{% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <form method="post" class="bg-white border rounded p-6 space-y-4">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div>
+      <label class="block text-sm mb-1">{{ form.name.label }}</label>
+      {{ form.name }}{{ form.name.errors }}
+    </div>
+    <div>
+      <label class="block text-sm mb-1">{{ form.email.label }}</label>
+      {{ form.email }}{{ form.email.errors }}
+    </div>
+    <div>
+      <label class="block text-sm mb-1">{{ form.message.label }}</label>
+      {{ form.message }}{{ form.message.errors }}
+    </div>
+    <button class="bg-stone-900 text-white px-6 py-3 rounded hover:bg-stone-700">Отправить</button>
+  </form>
+</section>
+{% endblock %}

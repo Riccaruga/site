@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ artwork.title }} — {{ artist_profile.name|default:"Художник" }}{% endblock %}
+{% block meta_description %}{{ artwork.title }}, {{ artwork.technique }}{% if artwork.year %}, {{ artwork.year }}{% endif %}. {{ artwork.description|truncatewords:20 }}{% endblock %}
+{% block content %}
+<section class="max-w-6xl mx-auto px-4 py-10">
+  <a href="{% url 'gallery:list' %}" class="text-sm underline text-stone-500">← Назад в галерею</a>
+  <div class="grid md:grid-cols-2 gap-10 mt-4">
+    <div>
+      {% if artwork.image %}
+      <img id="main-image" src="{{ artwork.image.url }}" alt="{{ artwork.title }}" class="rounded shadow w-full object-contain bg-white cursor-zoom-in" data-lightbox>
+      {% endif %}
+      {% if artwork.extra_images.all %}
+      <div class="grid grid-cols-4 gap-2 mt-3">
+        <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" class="thumb rounded border cursor-pointer aspect-square object-cover" data-full="{{ artwork.image.url }}">
+        {% for img in artwork.extra_images.all %}
+        <img src="{{ img.image.url }}" alt="{{ img.caption|default:artwork.title }}" class="thumb rounded border cursor-pointer aspect-square object-cover" data-full="{{ img.image.url }}">
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <div>
+      <h1 class="text-3xl font-serif mb-2">{{ artwork.title }}</h1>
+      <div class="text-stone-600 mb-4">
+        {% if artwork.series %}{{ artwork.series.name }} · {% endif %}
+        {% if artwork.year %}{{ artwork.year }} · {% endif %}
+        {{ artwork.technique }}
+        {% if artwork.dimensions_display %} · {{ artwork.dimensions_display }}{% endif %}
+      </div>
+      {% if artwork.description %}
+      <p class="whitespace-pre-line leading-relaxed">{{ artwork.description }}</p>
+      {% endif %}
+      <div class="mt-6 flex gap-3">
+        <a href="{% url 'core:contacts' %}?artwork={{ artwork.title|urlencode }}" class="bg-stone-900 text-white px-6 py-3 rounded hover:bg-stone-700">Спросить о картине</a>
+      </div>
+      <div class="mt-8 flex justify-between text-sm">
+        <div>{% if prev_artwork %}<a href="{{ prev_artwork.get_absolute_url }}" class="underline">← {{ prev_artwork.title }}</a>{% endif %}</div>
+        <div>{% if next_artwork %}<a href="{{ next_artwork.get_absolute_url }}" class="underline">{{ next_artwork.title }} →</a>{% endif %}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="lightbox" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50 p-4">
+  <img id="lightbox-img" src="" alt="" class="max-h-full max-w-full rounded">
+</div>
+{% endblock %}

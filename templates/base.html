@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{% if artist_profile and artist_profile.meta_title %}{{ artist_profile.meta_title }}{% elif artist_profile %}{{ artist_profile.name }}{% else %}Художник — живопись{% endif %}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{% if artist_profile and artist_profile.meta_description %}{{ artist_profile.meta_description }}{% else %}Картины, выставки, биография художника.{% endif %}{% endblock %}">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/static/css/style.css">
+{% block extra_head %}{% endblock %}
+</head>
+<body class="bg-stone-50 text-stone-900 min-h-screen flex flex-col">
+<header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
+  <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="{% url 'core:home' %}" class="text-xl font-serif font-bold">
+      {% if artist_profile %}{{ artist_profile.name }}{% else %}Художник{% endif %}
+    </a>
+    <div class="flex gap-4 text-sm md:text-base">
+      <a href="{% url 'gallery:list' %}" class="hover:underline">Галерея</a>
+      <a href="{% url 'core:about' %}" class="hover:underline">О художнике</a>
+      <a href="{% url 'exhibitions:list' %}" class="hover:underline">Выставки</a>
+      <a href="{% url 'core:contacts' %}" class="hover:underline">Контакты</a>
+    </div>
+  </nav>
+</header>
+
+{% if messages %}
+<div class="max-w-3xl mx-auto px-4 mt-4 w-full">
+  {% for message in messages %}
+  <div class="border rounded px-4 py-3 bg-green-50 border-green-200">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<main class="flex-1">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="border-t mt-12 bg-white">
+  <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-stone-600 flex flex-col md:flex-row gap-2 justify-between">
+    <div>© {% now "Y" %} {% if artist_profile %}{{ artist_profile.name }}{% endif %} — все права защищены.</div>
+    <div class="flex gap-3">
+      {% if artist_profile.email %}<a href="mailto:{{ artist_profile.email }}" class="hover:underline">Email</a>{% endif %}
+      {% if artist_profile.telegram %}<a href="{{ artist_profile.telegram }}" class="hover:underline">Telegram</a>{% endif %}
+      {% if artist_profile.instagram %}<a href="{{ artist_profile.instagram }}" class="hover:underline">Instagram</a>{% endif %}
+    </div>
+  </div>
+</footer>
+<script src="/static/js/lightbox.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
