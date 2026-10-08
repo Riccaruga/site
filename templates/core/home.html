@@ -8,7 +8,7 @@
       <p class="text-lg text-stone-600 mb-6">{% if profile and profile.statement %}{{ profile.statement|truncatewords:30 }}{% else %}Живопись — пейзажи, портреты, натюрморты.{% endif %}</p>
       <div class="flex gap-3">
         <a href="{% url 'gallery:list' %}" class="bg-stone-900 text-white px-6 py-3 rounded hover:bg-stone-700">Смотреть галерею</a>
-        <a href="{% url 'core:about' %}" class="border px-6 py-3 rounded hover:bg-stone-100">О художнике</a>
+        <a href="{% url 'core:about' %}" class="border px-6 py-3 rounded hover:bg-stone-100">Обо мне</a>
       </div>
     </div>
     <div>
