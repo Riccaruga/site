@@ -128,6 +128,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Matches 0001_initial migrations (already BigAutoField); silences models.W042.
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
