@@ -1,0 +1,4 @@
+# Keep Timeweb deploy files LF so they run on Linux (mod_wsgi / bash).
+deploy/deploy.sh text eol=lf
+deploy/wsgi.timeweb.py text eol=lf
+deploy/htaccess.timeweb text eol=lf

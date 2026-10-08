@@ -17,6 +17,41 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def _load_dotenv(path):
+    """Load KEY=VALUE lines into os.environ (no override, no extra deps).
+
+    Used on Timeweb shared hosting where secrets live in ~/site/.env
+    (chmod 600, NOT in git). Local dev keeps working with real env vars.
+    """
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith('#') or '=' not in line:
+                    continue
+                key, _, val = line.partition('=')
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
+                if key and key not in os.environ:
+                    os.environ[key] = val
+    except (FileNotFoundError, NotADirectoryError, PermissionError):
+        pass
+
+
+# Order: explicit env file -> ~/site/.env (Timeweb) -> project .env (local) -> parent .env
+for _env_path in (
+    os.environ.get('DJANGO_ENV_FILE', ''),
+    os.path.expanduser('~/site/.env'),
+    str(BASE_DIR / '.env'),
+):
+    if _env_path:
+        _load_dotenv(_env_path)
+
+
+def _csv(name):
+    return [v.strip() for v in os.environ.get(name, '').split(',') if v.strip()]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
@@ -29,9 +64,21 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if os.environ.get('DJANGO_ALLOWED_HOSTS') else []
+ALLOWED_HOSTS = _csv('DJANGO_ALLOWED_HOSTS')
 if DEBUG:
     ALLOWED_HOSTS += ['127.0.0.1', 'localhost']
+
+# CSRF: must include scheme, e.g. http://ct931410.tw1.ru (no SSL yet),
+# after Let's Encrypt switch to https://your-domain.ru
+CSRF_TRUSTED_ORIGINS = _csv('DJANGO_CSRF_TRUSTED_ORIGINS') or _csv('CSRF_TRUSTED_ORIGINS')
+
+# Behind Timeweb Apache / Render TLS termination
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Keep False on http tech-domain (ct931410.tw1.ru); enable via env after HTTPS:
+# DJANGO_SECURE_COOKIES=True
+_SECURE_COOKIES = os.environ.get('DJANGO_SECURE_COOKIES', 'False') == 'True'
+SESSION_COOKIE_SECURE = _SECURE_COOKIES
+CSRF_COOKIE_SECURE = _SECURE_COOKIES
 
 
 # Application definition
@@ -84,7 +131,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
-# Prod: задайте DATABASE_URL=postgres://... (Render/Supabase), dev: SQLite по умолчанию.
+# Priority: 1) MySQL via DB_* (Timeweb shared, HOST=localhost),
+#           2) DATABASE_URL (Postgres, Render/Supabase),
+#           3) SQLite (local dev).
 
 DATABASES = {
     'default': {
@@ -93,8 +142,22 @@ DATABASES = {
     }
 }
 
+_DB_NAME = os.environ.get('DB_NAME', '')
 _DATABASE_URL = os.environ.get('DATABASE_URL', '')
-if _DATABASE_URL:
+if _DB_NAME:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': _DB_NAME,
+        'USER': os.environ.get('DB_USER', _DB_NAME),
+        'PASSWORD': os.environ.get('DB_PASS', os.environ.get('DB_PASSWORD', '')),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
+elif _DATABASE_URL:
     try:
         import dj_database_url
         DATABASES['default'] = dj_database_url.parse(_DATABASE_URL, conn_max_age=600)
@@ -136,7 +199,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STORAGES = {
@@ -148,7 +211,7 @@ STORAGES = {
     },
 }
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Contact / email
@@ -157,9 +220,16 @@ CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'artist@example.com')  # <-- п�
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
+# Dev default: console. Prod (Timeweb SMTP): set EMAIL_HOST etc. in ~/site/.env.
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND',
+    'django.core.mail.backends.smtp.EmailBackend' if os.environ.get('EMAIL_HOST') else 'django.core.mail.backends.console.EmailBackend',
+)
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587') or '587')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'False') == 'True'
+EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '10') or '10')
