@@ -8,7 +8,7 @@ SITE_DIR="$HOME/site"
 REPO_DIR="$SITE_DIR/repo"
 PUBLIC_DIR="$SITE_DIR/public_html"
 VENV_DIR="$SITE_DIR/venv"
-BRANCH="${BRANCH:-main}"
+BRANCH="${BRANCH:-master}"
 
 echo "==> [1/6] git pull ($BRANCH)"
 cd "$REPO_DIR"
