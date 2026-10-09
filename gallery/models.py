@@ -60,10 +60,10 @@ class Artwork(models.Model):
     image = models.ImageField("Изображение", upload_to="artworks/%Y/")
     # Превью для списка: ровная рамка 4:3, картину не обрезаем (Fit, не Fill)
     list_thumb = ImageSpecField(source="image",
-                                processors=[ResizeToFit(600, 450)],
+                                processors=[ResizeToFit(600, 600)],
                                 format="WEBP", options={"quality": 75})
     list_thumb_2x = ImageSpecField(source="image",
-                                   processors=[ResizeToFit(1200, 900)],
+                                   processors=[ResizeToFit(1200, 1200)],
                                    format="WEBP", options={"quality": 70})
     detail_medium = ImageSpecField(source="image",
                                    processors=[ResizeToFit(1200, 1200)],

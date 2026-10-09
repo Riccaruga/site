@@ -5,12 +5,12 @@
   <h1 class="text-2xl md:text-3xl font-serif mb-4 md:mb-6">Галерея</h1>
 
   {% if artworks %}
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-4">
     {% for art in artworks %}
     <a href="{{ art.get_absolute_url }}" class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-stone-200/60 min-h-[44px]">
       {% if art.image %}
-      <div class="bg-stone-100 p-2 md:p-4">
-        <img src="{{ art.list_thumb.url }}" srcset="{{ art.list_thumb.url }} 600w, {{ art.list_thumb_2x.url }} 1200w" sizes="(max-width: 768px) 50vw, 25vw" alt="{{ art.title }}" class="w-full aspect-[4/3] object-contain bg-stone-100 group-hover:scale-[1.02] transition" loading="lazy" decoding="async">
+      <div class="bg-stone-100 p-1.5 md:p-3">
+        <img src="{{ art.list_thumb.url }}" srcset="{{ art.list_thumb.url }} 600w, {{ art.list_thumb_2x.url }} 1200w" sizes="(max-width: 768px) 50vw, 33vw" alt="{{ art.title }}" class="w-full aspect-square object-contain bg-stone-100 group-hover:scale-[1.02] transition" loading="lazy" decoding="async">
       </div>
       {% endif %}
       <div class="p-2.5 md:p-3">
