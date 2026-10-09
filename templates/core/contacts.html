@@ -1,38 +1,69 @@
 {% extends "base.html" %}
 {% block title %}Контакты — {{ artist_profile.name|default:"Художник" }}{% endblock %}
 {% block content %}
-<section class="max-w-3xl mx-auto px-4 py-8 md:py-12">
-  <h1 class="text-2xl md:text-3xl font-serif mb-4">Контакты</h1>
-  <p class="text-stone-600 mb-6">Напишите, если понравилась картина или хотите узнать подробнее. Отвечаю лично.</p>
+<section class="max-w-5xl mx-auto px-4 py-8 md:py-12">
+  <h1 class="text-2xl md:text-3xl font-serif mb-2">Контакты</h1>
+  <p class="text-stone-600 mb-8">Напишите, если понравилась картина или хотите узнать подробнее. Отвечаю лично.</p>
 
-  {% if profile.email or profile.phone or profile.telegram %}
-  <div class="bg-white border rounded p-4 mb-6 text-sm">
-    {% if profile.email %}<div>Email: <a class="underline" href="mailto:{{ profile.email }}">{{ profile.email }}</a></div>{% endif %}
-    {% if profile.phone %}<div>Телефон: {{ profile.phone }}</div>{% endif %}
-    <div class="flex gap-3 mt-1">
-      {% if profile.telegram %}<a class="underline" href="{{ profile.telegram }}">Telegram</a>{% endif %}
-      {% if profile.instagram %}<a class="underline" href="{{ profile.instagram }}">Instagram</a>{% endif %}
-      {% if profile.whatsapp %}<a class="underline" href="{{ profile.whatsapp }}">WhatsApp</a>{% endif %}
+  <div class="grid md:grid-cols-5 gap-6">
+    <div class="md:col-span-2">
+      <div class="bg-white border rounded-xl shadow-sm p-5 md:p-6">
+        <h2 class="font-serif text-lg mb-4">Связаться</h2>
+        <div class="flex flex-col gap-3">
+          {% if profile.email %}
+          <div class="flex gap-2">
+            <div class="flex-1 border rounded-lg px-4 py-3 min-h-[44px] flex items-center break-all" data-email-text>{{ profile.email }}</div>
+            <button type="button" data-copy-email="{{ profile.email }}" class="border rounded-lg min-w-[44px] min-h-[44px] w-[44px] h-[44px] p-0 flex items-center justify-center hover:bg-stone-100 shrink-0" aria-label="Скопировать адрес почты" title="Скопировать">
+              <svg data-icon-copy width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg data-icon-check class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span class="sr-only">Скопировать</span>
+            </button>
+          </div>
+          <div aria-live="polite" class="sr-only" data-copy-hint>Адрес скопирован</div>
+          {% endif %}
+          {% if profile.telegram %}
+          <a href="{{ profile.telegram }}" class="flex items-center justify-center border rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-100">Telegram</a>
+          {% endif %}
+          {% if profile.instagram %}
+          <a href="{{ profile.instagram }}" class="flex items-center justify-center border rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-100">Instagram</a>
+          {% endif %}
+          {% if profile.whatsapp %}
+          <a href="{{ profile.whatsapp }}" class="flex items-center justify-center border rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-100">WhatsApp</a>
+          {% endif %}
+          {% if not profile.email and not profile.telegram and not profile.instagram and not profile.whatsapp %}
+          <p class="text-sm text-stone-500">Контакты скоро появятся. Пока напишите через форму.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="md:col-span-3">
+      <form method="post" class="bg-white border rounded-xl shadow-sm p-5 md:p-6 space-y-4" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div>
+          <label class="block text-sm font-medium mb-1" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+          {{ form.name }}
+          {% if form.name.errors %}<div class="text-sm text-red-600 mt-1">{{ form.name.errors }}</div>{% endif %}
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+          {{ form.email }}
+          {% if form.email.errors %}<div class="text-sm text-red-600 mt-1">{{ form.email.errors }}</div>{% endif %}
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1" for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+          {{ form.message }}
+          {% if form.message.errors %}<div class="text-sm text-red-600 mt-1">{{ form.message.errors }}</div>{% endif %}
+        </div>
+        <button class="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 w-full sm:w-auto min-h-[44px]">Отправить</button>
+      </form>
     </div>
   </div>
-  {% endif %}
-
-  <form method="post" class="bg-white border rounded p-4 md:p-6 space-y-4">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-    <div>
-      <label class="block text-sm mb-1">{{ form.name.label }}</label>
-      {{ form.name }}{{ form.name.errors }}
-    </div>
-    <div>
-      <label class="block text-sm mb-1">{{ form.email.label }}</label>
-      {{ form.email }}{{ form.email.errors }}
-    </div>
-    <div>
-      <label class="block text-sm mb-1">{{ form.message.label }}</label>
-      {{ form.message }}{{ form.message.errors }}
-    </div>
-    <button class="bg-stone-900 text-white px-6 py-3 rounded hover:bg-stone-700 w-full sm:w-auto min-h-[44px]">Отправить</button>
-  </form>
 </section>
+{% endblock %}
+{% block extra_js %}
+<script src="/static/js/contacts.js"></script>
 {% endblock %}
