@@ -58,12 +58,12 @@ class Artwork(models.Model):
                                     null=True, blank=True)
     description = models.TextField("История картины", blank=True)
     image = models.ImageField("Изображение", upload_to="artworks/%Y/")
-    # Превью для mobile: квадрат списка + большой для деталки (генерируются на лету, в БД не хранятся)
+    # Превью для списка: ровная рамка 4:3, картину не обрезаем (Fit, не Fill)
     list_thumb = ImageSpecField(source="image",
-                                processors=[ResizeToFill(400, 400)],
+                                processors=[ResizeToFit(600, 450)],
                                 format="WEBP", options={"quality": 75})
     list_thumb_2x = ImageSpecField(source="image",
-                                   processors=[ResizeToFill(800, 800)],
+                                   processors=[ResizeToFit(1200, 900)],
                                    format="WEBP", options={"quality": 70})
     detail_medium = ImageSpecField(source="image",
                                    processors=[ResizeToFit(1200, 1200)],

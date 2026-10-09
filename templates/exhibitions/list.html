@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Выставки — {{ artist_profile.name|default:"Художник" }}{% endblock %}
 {% block content %}
-<section class="max-w-4xl mx-auto px-4 py-10">
-  <h1 class="text-3xl font-serif mb-6">Выставки</h1>
+<section class="max-w-4xl mx-auto px-4 py-8 md:py-12">
+  <h1 class="text-2xl md:text-3xl font-serif mb-6">Выставки</h1>
 
   <h2 class="text-xl font-medium mb-3">Текущие</h2>
   {% if current %}
