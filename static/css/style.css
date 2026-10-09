@@ -1,4 +1,14 @@
-body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+html, body { overflow-x: hidden; }
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
 .font-serif { font-family: Georgia, "Times New Roman", serif; }
-img[data-lightbox] { transition: opacity .2s; }
+img { max-width: 100%; height: auto; }
+img[data-lightbox] { transition: opacity .2s; touch-action: manipulation; }
 .thumb.selected { outline: 2px solid #1c1917; }
+.thumb { min-height: 44px; }
+/* Закрыть бургер по клику вне — нативно через <details>, плюс крупный тап */
+details summary::-webkit-details-marker { display: none; }
+details summary { list-style: none; }
+/* Формы: 16px против iOS-zoom, тапы 44px */
+input, textarea, select { font-size: 16px; max-width: 100%; }
+button, .btn, summary { min-height: 44px; }
+a { overflow-wrap: break-word; }

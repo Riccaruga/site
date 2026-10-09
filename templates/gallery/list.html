@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Галерея — {{ artist_profile.name|default:"Художник" }}{% endblock %}
 {% block content %}
-<section class="max-w-6xl mx-auto px-4 py-10">
-  <h1 class="text-3xl font-serif mb-6">Галерея</h1>
+<section class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+  <h1 class="text-2xl md:text-3xl font-serif mb-4 md:mb-6">Галерея</h1>
 
   {% if artworks %}
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
     {% for art in artworks %}
-    <a href="{{ art.get_absolute_url }}" class="group bg-white rounded overflow-hidden shadow-sm hover:shadow">
+    <a href="{{ art.get_absolute_url }}" class="group bg-white rounded overflow-hidden shadow-sm hover:shadow min-h-[44px]">
       {% if art.image %}
-      <img src="{{ art.image.url }}" alt="{{ art.title }}" class="w-full aspect-square object-cover group-hover:scale-[1.02] transition" loading="lazy">
+      <img src="{{ art.list_thumb.url }}" srcset="{{ art.list_thumb.url }} 400w, {{ art.list_thumb_2x.url }} 800w" sizes="(max-width: 768px) 50vw, 25vw" alt="{{ art.title }}" class="w-full aspect-square object-cover group-hover:scale-[1.02] transition" loading="lazy" decoding="async">
       {% endif %}
-      <div class="p-3">
-        <div class="font-medium leading-tight">{{ art.title }}</div>
-        {% if art.technique %}<div class="text-sm text-stone-500">{{ art.technique }}</div>{% endif %}
-        {% if art.dimensions_display %}<div class="text-sm text-stone-500">{{ art.dimensions_display }}</div>{% endif %}
-        {% if art.year %}<div class="text-sm text-stone-500">{{ art.year }}</div>{% endif %}
+      <div class="p-2.5 md:p-3">
+        <div class="font-medium leading-snug text-[15px] md:text-base break-words">{{ art.title }}</div>
+        {% if art.technique %}<div class="text-[13px] md:text-sm text-stone-500 break-words">{{ art.technique }}</div>{% endif %}
+        {% if art.dimensions_display %}<div class="text-[13px] md:text-sm text-stone-500">{{ art.dimensions_display }}</div>{% endif %}
+        {% if art.year %}<div class="text-[13px] md:text-sm text-stone-500">{{ art.year }}</div>{% endif %}
       </div>
     </a>
     {% endfor %}
   </div>
 
   {% if is_paginated %}
-  <div class="flex gap-2 justify-center mt-8">
-    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}" class="border px-3 py-2 rounded">← Назад</a>{% endif %}
+  <div class="flex gap-2 justify-center items-center mt-8">
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}" class="border px-4 py-3 rounded min-h-[44px] flex items-center">← Назад</a>{% endif %}
     <span class="px-3 py-2 text-sm">Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
-    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}" class="border px-3 py-2 rounded">Вперёд →</a>{% endif %}
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}" class="border px-4 py-3 rounded min-h-[44px] flex items-center">Вперёд →</a>{% endif %}
   </div>
   {% endif %}
   {% else %}

@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify as django_slugify
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill, ResizeToFit
 
 try:
     from pytils.translit import slugify as translit_slugify
@@ -56,6 +58,19 @@ class Artwork(models.Model):
                                     null=True, blank=True)
     description = models.TextField("История картины", blank=True)
     image = models.ImageField("Изображение", upload_to="artworks/%Y/")
+    # Превью для mobile: квадрат списка + большой для деталки (генерируются на лету, в БД не хранятся)
+    list_thumb = ImageSpecField(source="image",
+                                processors=[ResizeToFill(400, 400)],
+                                format="WEBP", options={"quality": 75})
+    list_thumb_2x = ImageSpecField(source="image",
+                                   processors=[ResizeToFill(800, 800)],
+                                   format="WEBP", options={"quality": 70})
+    detail_medium = ImageSpecField(source="image",
+                                   processors=[ResizeToFit(1200, 1200)],
+                                   format="WEBP", options={"quality": 78})
+    detail_large = ImageSpecField(source="image",
+                                  processors=[ResizeToFit(1800, 1800)],
+                                  format="WEBP", options={"quality": 75})
     is_featured = models.BooleanField("На главную", default=False)
     is_published = models.BooleanField("Опубликовано", default=True)
     order = models.PositiveIntegerField("Порядок", default=0)
@@ -101,6 +116,9 @@ class ArtworkImage(models.Model):
     image = models.ImageField("Изображение", upload_to="artworks/details/%Y/")
     caption = models.CharField("Подпись", max_length=220, blank=True)
     order = models.PositiveIntegerField("Порядок", default=0)
+    thumb = ImageSpecField(source="image",
+                           processors=[ResizeToFill(400, 400)],
+                           format="WEBP", options={"quality": 70})
 
     class Meta:
         verbose_name = "Доп. фото картины"

@@ -2,44 +2,44 @@
 {% block title %}{{ artwork.title }} — {{ artist_profile.name|default:"Художник" }}{% endblock %}
 {% block meta_description %}{{ artwork.title }}, {{ artwork.technique }}{% if artwork.year %}, {{ artwork.year }}{% endif %}. {{ artwork.description|truncatewords:20 }}{% endblock %}
 {% block content %}
-<section class="max-w-6xl mx-auto px-4 py-10">
-  <a href="{% url 'gallery:list' %}" class="text-sm underline text-stone-500">← Назад в галерею</a>
-  <div class="grid md:grid-cols-2 gap-10 mt-4">
+<section class="max-w-6xl mx-auto px-4 py-6 md:py-10">
+  <a href="{% url 'gallery:list' %}" class="inline-block text-sm underline text-stone-500 py-2 min-h-[44px]">← Назад в галерею</a>
+  <div class="grid md:grid-cols-2 gap-6 md:gap-10 mt-2 md:mt-4">
     <div>
       {% if artwork.image %}
-      <img id="main-image" src="{{ artwork.image.url }}" alt="{{ artwork.title }}" class="rounded shadow w-full object-contain bg-white cursor-zoom-in" data-lightbox>
+      <img id="main-image" src="{{ artwork.detail_medium.url }}" srcset="{{ artwork.detail_medium.url }} 1200w, {{ artwork.detail_large.url }} 1800w" sizes="(max-width: 768px) 100vw, 50vw" alt="{{ artwork.title }}" class="rounded shadow w-full object-contain bg-white cursor-zoom-in" data-lightbox loading="eager" decoding="async">
       {% endif %}
       {% if artwork.extra_images.all %}
       <div class="grid grid-cols-4 gap-2 mt-3">
-        <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" class="thumb rounded border cursor-pointer aspect-square object-cover" data-full="{{ artwork.image.url }}">
+        <img src="{{ artwork.detail_medium.url }}" alt="{{ artwork.title }}" class="thumb rounded border cursor-pointer aspect-square object-cover min-h-[44px]" data-full="{{ artwork.detail_large.url }}" loading="lazy" decoding="async">
         {% for img in artwork.extra_images.all %}
-        <img src="{{ img.image.url }}" alt="{{ img.caption|default:artwork.title }}" class="thumb rounded border cursor-pointer aspect-square object-cover" data-full="{{ img.image.url }}">
+        <img src="{{ img.thumb.url }}" alt="{{ img.caption|default:artwork.title }}" class="thumb rounded border cursor-pointer aspect-square object-cover min-h-[44px]" data-full="{{ img.image.url }}" loading="lazy" decoding="async">
         {% endfor %}
       </div>
       {% endif %}
     </div>
     <div>
-      <h1 class="text-3xl font-serif mb-2">{{ artwork.title }}</h1>
-      <div class="text-stone-600 mb-4">
+      <h1 class="text-2xl md:text-3xl font-serif mb-2 break-words">{{ artwork.title }}</h1>
+      <div class="text-stone-600 mb-4 break-words">
         {% if artwork.year %}{{ artwork.year }} · {% endif %}
         {{ artwork.technique }}
         {% if artwork.dimensions_display %} · {{ artwork.dimensions_display }}{% endif %}
       </div>
       {% if artwork.description %}
-      <p class="whitespace-pre-line leading-relaxed">{{ artwork.description }}</p>
+      <p class="whitespace-pre-line leading-relaxed break-words">{{ artwork.description }}</p>
       {% endif %}
-      <div class="mt-6 flex gap-3">
-        <a href="{% url 'core:contacts' %}?artwork={{ artwork.title|urlencode }}" class="bg-stone-900 text-white px-6 py-3 rounded hover:bg-stone-700">Спросить о картине</a>
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <a href="{% url 'core:contacts' %}?artwork={{ artwork.title|urlencode }}" class="bg-stone-900 text-white px-6 py-3 rounded hover:bg-stone-700 text-center min-h-[44px] flex items-center justify-center">Спросить о картине</a>
       </div>
-      <div class="mt-8 flex justify-between text-sm">
-        <div>{% if prev_artwork %}<a href="{{ prev_artwork.get_absolute_url }}" class="underline">← {{ prev_artwork.title }}</a>{% endif %}</div>
-        <div>{% if next_artwork %}<a href="{{ next_artwork.get_absolute_url }}" class="underline">{{ next_artwork.title }} →</a>{% endif %}</div>
+      <div class="mt-8 flex flex-col sm:flex-row gap-2 sm:justify-between text-sm">
+        <div class="truncate">{% if prev_artwork %}<a href="{{ prev_artwork.get_absolute_url }}" class="underline inline-block py-2">← {{ prev_artwork.title }}</a>{% endif %}</div>
+        <div class="truncate sm:text-right">{% if next_artwork %}<a href="{{ next_artwork.get_absolute_url }}" class="underline inline-block py-2">{{ next_artwork.title }} →</a>{% endif %}</div>
       </div>
     </div>
   </div>
 </section>
 
-<div id="lightbox" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50 p-4">
+<div id="lightbox" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50 p-4" style="touch-action: pan-y;">
   <img id="lightbox-img" src="" alt="" class="max-h-full max-w-full rounded">
 </div>
 {% endblock %}
