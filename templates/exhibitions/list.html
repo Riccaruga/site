@@ -47,6 +47,7 @@
       <div class="text-sm text-stone-600">{{ ex.venue }}</div>
       <div class="text-sm text-stone-500">{% if ex.city %}{{ ex.city }} · {% endif %}{{ ex.date_start }}{% if ex.date_end %} — {{ ex.date_end }}{% endif %}</div>
       {% if ex.description %}<p class="mt-2 text-sm whitespace-pre-line">{{ ex.description }}</p>{% endif %}
+      {% if ex.link %}<a href="{{ ex.link }}" class="text-sm underline">Подробнее →</a>{% endif %}
     </div>
     {% endfor %}
   </div>
