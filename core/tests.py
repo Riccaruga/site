@@ -24,3 +24,12 @@ class CorePagesTests(TestCase):
     def test_profile_singleton(self):
         p = ArtistProfile.get_solo()
         self.assertEqual(p.pk, 1)
+
+    def test_nav_active_state(self):
+        # Текущий раздел подсвечен тёмной кнопкой
+        for name in ["gallery:list", "core:about",
+                     "exhibitions:list", "core:contacts"]:
+            with self.subTest(name=name):
+                resp = self.client.get(reverse(name))
+                self.assertEqual(resp.status_code, 200)
+                self.assertContains(resp, "bg-stone-900 text-white")

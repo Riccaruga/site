@@ -12,24 +12,26 @@
 <body class="bg-stone-50 text-stone-900 min-h-screen flex flex-col overflow-x-hidden">
 <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
   <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-    <a href="{% url 'core:home' %}" class="text-lg md:text-xl font-serif font-bold break-words">
+    <a href="{% url 'core:home' %}" class="text-lg md:text-xl font-serif font-bold tracking-wide break-words">
       {% if artist_profile %}{{ artist_profile.name }}{% else %}Художник{% endif %}
     </a>
-    <div class="hidden md:flex gap-4 text-base">
-      <a href="{% url 'gallery:list' %}" class="hover:underline py-2">Галерея</a>
-      <a href="{% url 'core:about' %}" class="hover:underline py-2">Обо мне</a>
-      <a href="{% url 'exhibitions:list' %}" class="hover:underline py-2">Выставки</a>
-      <a href="{% url 'core:contacts' %}" class="hover:underline py-2">Контакты</a>
+    {% with v=request.resolver_match.view_name %}
+    <div class="hidden md:flex gap-2 text-base">
+      <a href="{% url 'gallery:list' %}" class="px-3 py-2 rounded transition {% if v == 'gallery:list' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Галерея</a>
+      <a href="{% url 'core:about' %}" class="px-3 py-2 rounded transition {% if v == 'core:about' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Обо мне</a>
+      <a href="{% url 'exhibitions:list' %}" class="px-3 py-2 rounded transition {% if v == 'exhibitions:list' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Выставки</a>
+      <a href="{% url 'core:contacts' %}" class="px-3 py-2 rounded transition {% if v == 'core:contacts' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Контакты</a>
     </div>
     <details class="md:hidden relative">
       <summary class="min-h-[44px] min-w-[44px] flex items-center justify-center border rounded px-3 py-2 cursor-pointer select-none text-xl leading-none" aria-label="Меню">☰</summary>
-      <div class="absolute right-0 top-full mt-2 w-52 bg-white border rounded shadow-lg flex flex-col overflow-hidden">
-        <a href="{% url 'gallery:list' %}" class="px-4 py-3 hover:bg-stone-100 border-b">Галерея</a>
-        <a href="{% url 'core:about' %}" class="px-4 py-3 hover:bg-stone-100 border-b">Обо мне</a>
-        <a href="{% url 'exhibitions:list' %}" class="px-4 py-3 hover:bg-stone-100 border-b">Выставки</a>
-        <a href="{% url 'core:contacts' %}" class="px-4 py-3 hover:bg-stone-100">Контакты</a>
+      <div class="absolute right-0 top-full mt-2 w-52 bg-white border rounded shadow-lg flex flex-col overflow-hidden p-1 gap-1">
+        <a href="{% url 'gallery:list' %}" class="px-4 py-3 rounded transition {% if v == 'gallery:list' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Галерея</a>
+        <a href="{% url 'core:about' %}" class="px-4 py-3 rounded transition {% if v == 'core:about' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Обо мне</a>
+        <a href="{% url 'exhibitions:list' %}" class="px-4 py-3 rounded transition {% if v == 'exhibitions:list' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Выставки</a>
+        <a href="{% url 'core:contacts' %}" class="px-4 py-3 rounded transition {% if v == 'core:contacts' %}bg-stone-900 text-white font-medium{% else %}hover:bg-stone-200{% endif %}">Контакты</a>
       </div>
     </details>
+    {% endwith %}
   </nav>
 </header>
 
