@@ -1,65 +1,132 @@
 {% extends "base.html" %}
 {% block title %}Контакты — {{ artist_profile.name|default:"Художник" }}{% endblock %}
 {% block content %}
-<section class="max-w-5xl mx-auto px-4 py-8 md:py-12">
-  <h1 class="text-2xl md:text-3xl font-serif mb-2">Контакты</h1>
-  <p class="text-stone-600 mb-8">Напишите, если понравилась картина или хотите узнать подробнее.</p>
-
-  <div class="grid md:grid-cols-5 gap-6">
-    <div class="md:col-span-2">
-      <div class="bg-white border rounded-xl shadow-sm p-5 md:p-6">
-        <h2 class="font-serif text-lg mb-4">Связаться</h2>
-        <div class="flex flex-col gap-3">
-          {% if profile.email %}
-          <div class="flex gap-2">
-            <div class="flex-1 border rounded-lg px-4 py-3 min-h-[44px] flex items-center break-all" data-email-text>{{ profile.email }}</div>
-            <button type="button" data-copy-email="{{ profile.email }}" class="border rounded-lg min-w-[44px] min-h-[44px] w-[44px] h-[44px] p-0 flex items-center justify-center hover:bg-stone-100 shrink-0" aria-label="Скопировать адрес почты" title="Скопировать">
-              <svg data-icon-copy width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              <svg data-icon-check class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              <span class="sr-only">Скопировать</span>
-            </button>
-          </div>
-          <div aria-live="polite" class="sr-only" data-copy-hint>Адрес скопирован</div>
-          {% endif %}
-          {% if profile.telegram %}
-          <a href="{{ profile.telegram }}" class="flex items-center justify-center border rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-100">Telegram</a>
-          {% endif %}
-          {% if profile.instagram %}
-          <a href="{{ profile.instagram }}" class="flex items-center justify-center border rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-100">Instagram</a>
-          {% endif %}
-          {% if profile.whatsapp %}
-          <a href="{{ profile.whatsapp }}" class="flex items-center justify-center border rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-100">WhatsApp</a>
-          {% endif %}
-          {% if not profile.email and not profile.telegram and not profile.instagram and not profile.whatsapp %}
-          <p class="text-sm text-stone-500">Контакты скоро появятся. Пока напишите через форму.</p>
-          {% endif %}
-        </div>
-      </div>
+<section class="bg-gradient-to-b from-white via-stone-50 to-stone-50">
+  <div class="max-w-5xl mx-auto px-4 py-8 md:py-12">
+    <div class="max-w-2xl mb-8 md:mb-10">
+      <p class="text-xs font-medium uppercase tracking-[0.18em] text-stone-500 mb-2">Обратная связь</p>
+      <h1 class="text-2xl md:text-3xl font-serif mb-2">Контакты</h1>
+      <p class="text-stone-600">Напишите, если понравилась картина или хотите узнать подробнее.</p>
     </div>
 
-    <div class="md:col-span-3">
-      <form method="post" class="bg-white border rounded-xl shadow-sm p-5 md:p-6 space-y-4" novalidate>
-        {% csrf_token %}
-        {% if form.non_field_errors %}
-        <div class="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3">{{ form.non_field_errors }}</div>
-        {% endif %}
-        <div>
-          <label class="block text-sm font-medium mb-1" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-          {{ form.name }}
-          {% if form.name.errors %}<div class="text-sm text-red-600 mt-1">{{ form.name.errors }}</div>{% endif %}
+    <div class="grid md:grid-cols-5 gap-6 items-start">
+      <div class="md:col-span-2 md:sticky md:top-24">
+        <div class="bg-white border border-stone-200 rounded-2xl shadow-sm p-5 md:p-6">
+          <h2 class="font-serif text-lg mb-1">Связаться</h2>
+          <p class="text-sm text-stone-500 mb-4">Выберите удобный способ или напишите через форму.</p>
+          <div class="flex flex-col gap-3">
+            {% if profile.email %}
+            <div>
+              <div class="text-xs uppercase tracking-wide text-stone-500 mb-1.5">Почта</div>
+              <div class="flex gap-2">
+                <a href="mailto:{{ profile.email }}" class="flex-1 border border-stone-300 rounded-lg px-4 py-3 min-h-[44px] flex items-center break-all hover:bg-stone-50 transition">{{ profile.email }}</a>
+                <button type="button" data-copy-email="{{ profile.email }}" class="border border-stone-300 rounded-lg min-w-[44px] min-h-[44px] w-[44px] h-[44px] p-0 flex items-center justify-center hover:bg-stone-100 transition shrink-0" aria-label="Скопировать адрес почты" title="Скопировать">
+                  <svg data-icon-copy width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  <svg data-icon-check class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span class="sr-only">Скопировать</span>
+                </button>
+              </div>
+            </div>
+            <div aria-live="polite" class="sr-only" data-copy-hint>Адрес скопирован</div>
+            {% endif %}
+            {% if profile.telegram %}
+            <a href="{{ profile.telegram }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 border border-stone-300 rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-50 transition">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              <span>Telegram</span>
+            </a>
+            {% endif %}
+            {% if profile.instagram %}
+            <a href="{{ profile.instagram }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 border border-stone-300 rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-50 transition">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <span>Instagram</span>
+            </a>
+            {% endif %}
+            {% if profile.whatsapp %}
+            <a href="{{ profile.whatsapp }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 border border-stone-300 rounded-lg px-4 py-3 min-h-[44px] hover:bg-stone-50 transition">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>WhatsApp</span>
+            </a>
+            {% endif %}
+            {% if not profile.email and not profile.telegram and not profile.instagram and not profile.whatsapp %}
+            <p class="text-sm text-stone-500">Контакты скоро появятся. Пока напишите через форму.</p>
+            {% endif %}
+          </div>
         </div>
-        <div>
-          <label class="block text-sm font-medium mb-1" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-          {{ form.email }}
-          {% if form.email.errors %}<div class="text-sm text-red-600 mt-1">{{ form.email.errors }}</div>{% endif %}
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1" for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
-          {{ form.message }}
-          {% if form.message.errors %}<div class="text-sm text-red-600 mt-1">{{ form.message.errors }}</div>{% endif %}
-        </div>
-        <button class="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 w-full sm:w-auto min-h-[44px]">Отправить</button>
-      </form>
+      </div>
+
+      <div class="md:col-span-3">
+        <form id="contact-form" method="post" action="{% url 'core:contacts' %}#contact-form" class="scroll-mt-24 bg-white border border-stone-200 rounded-2xl shadow-sm p-5 md:p-7 space-y-5" aria-labelledby="contact-form-title">
+          {% csrf_token %}
+          {% if artwork_title %}<input type="hidden" name="artwork" value="{{ artwork_title }}">{% endif %}
+
+          <div>
+            <h2 id="contact-form-title" class="font-serif text-xl md:text-2xl mb-1">Напишите мне</h2>
+            <p class="text-sm text-stone-500">Отвечу в течение 1–2 дней. Можно спросить о работе, цене или доставке.</p>
+          </div>
+
+          {% if sent %}
+          <div role="status" class="flex items-start gap-3 border border-green-200 bg-green-50 text-green-900 rounded-xl px-4 py-3">
+            <svg class="w-5 h-5 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>
+            <div class="text-sm">
+              <div class="font-medium">Спасибо! Сообщение отправлено.</div>
+              <div class="text-green-800/80">Я отвечу на указанный email в ближайшее время.</div>
+              <a href="{% url 'core:contacts' %}#contact-form" class="inline-block mt-1 underline hover:no-underline">Написать ещё</a>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if artwork_title %}
+          <div class="flex items-center gap-2 text-sm border border-stone-200 bg-stone-50 rounded-lg px-3 py-2">
+            <svg class="w-4 h-4 shrink-0 text-stone-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>
+            <span class="min-w-0 break-words">О картине: <span class="font-medium">«{{ artwork_title }}»</span></span>
+            <a href="{% url 'core:contacts' %}#contact-form" class="ml-auto shrink-0 text-stone-500 underline hover:text-stone-900" aria-label="Убрать привязку к картине">Убрать</a>
+          </div>
+          {% endif %}
+
+          {% if form.errors %}
+          <div id="form-errors" role="alert" tabindex="-1" class="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3 outline-none">
+            <div class="font-medium mb-1">Проверьте выделенные поля</div>
+            <ul class="list-disc pl-5 space-y-0.5">
+              {% for field in form %}
+                {% for error in field.errors %}<li>{{ field.label }}: {{ error }}</li>{% endfor %}
+              {% endfor %}
+              {% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="{{ form.name.id_for_label }}">{{ form.name.label }} <span class="text-stone-400" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
+            {{ form.name }}
+            {% if form.name.errors %}<div id="{{ form.name.id_for_label }}-error" role="alert" class="text-sm text-red-600 mt-1">{{ form.name.errors|join:", " }}</div>{% endif %}
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1" for="{{ form.email.id_for_label }}">{{ form.email.label }} <span class="text-stone-400" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
+            {{ form.email }}
+            {% if form.email.errors %}<div id="{{ form.email.id_for_label }}-error" role="alert" class="text-sm text-red-600 mt-1">{{ form.email.errors|join:", " }}</div>{% endif %}
+          </div>
+
+          <div>
+            <div class="flex items-baseline justify-between gap-3 mb-1">
+              <label class="block text-sm font-medium" for="{{ form.message.id_for_label }}">{{ form.message.label }} <span class="text-stone-400" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
+              <span id="message-counter" data-counter class="text-xs text-stone-400 tabular-nums">{{ form.message.value|default_if_none:""|length }} / 2000</span>
+            </div>
+            {{ form.message }}
+            {% if form.message.errors %}<div id="{{ form.message.id_for_label }}-error" role="alert" class="text-sm text-red-600 mt-1">{{ form.message.errors|join:", " }}</div>{% endif %}
+          </div>
+
+          <div class="pt-1">
+            <button type="submit" data-submit class="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed">
+              <svg data-spinner class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
+              </svg>
+              <span data-submit-label>Отправить сообщение</span>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </section>
