@@ -18,24 +18,38 @@ function initCopyEmail() {
 
   const iconCopy = btn.querySelector("[data-icon-copy]");
   const iconCheck = btn.querySelector("[data-icon-check]");
+  const status = document.querySelector("[data-copy-status]");
+  let resetTimer;
 
   function showCopy() {
     if (iconCopy) iconCopy.classList.remove("hidden");
     if (iconCheck) iconCheck.classList.add("hidden");
     btn.setAttribute("aria-label", "Скопировать адрес почты");
+    if (status) {
+      status.classList.add("hidden");
+      status.textContent = "";
+    }
   }
   function showCheck() {
     if (iconCopy) iconCopy.classList.add("hidden");
     if (iconCheck) iconCheck.classList.remove("hidden");
     btn.setAttribute("aria-label", "Адрес скопирован");
+    if (status) {
+      status.textContent = "Скопировано";
+      status.classList.remove("hidden");
+    }
   }
 
   async function copyText(text) {
     if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
+      try {
+        await navigator.clipboard.writeText(text);
+        return;
+      } catch (e) {
+        // нет разрешения — пробуем legacy-способ ниже
+      }
     }
-    // Fallback для HTTP / старых браузеров
+    // Fallback для HTTP / старых браузеров / отказа в разрешении
     const ta = document.createElement("textarea");
     ta.value = text;
     ta.setAttribute("readonly", "");
@@ -43,8 +57,9 @@ function initCopyEmail() {
     ta.style.left = "-9999px";
     document.body.appendChild(ta);
     ta.select();
-    document.execCommand("copy");
+    const copied = document.execCommand("copy");
     document.body.removeChild(ta);
+    if (!copied) throw new Error("copy failed");
   }
 
   btn.addEventListener("click", async () => {
@@ -57,7 +72,8 @@ function initCopyEmail() {
       // тихо: оставляем иконку копирования
       showCopy();
     }
-    setTimeout(showCopy, 2000);
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(showCopy, 2000);
   });
 }
 
