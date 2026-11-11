@@ -3,14 +3,14 @@ from django import forms
 from .models import ContactMessage
 
 INPUT_CLS = (
-    "w-full border border-stone-200 rounded-[10px] h-[52px] px-4 bg-white outline-none "
-    "placeholder:text-stone-400 transition-colors duration-150 "
-    "focus:border-stone-700 focus:ring-2 focus:ring-stone-900/10"
+    "w-full border border-line/30 rounded-[10px] h-[52px] px-4 bg-paper-50 outline-none "
+    "placeholder:text-ink-mute transition-colors duration-150 "
+    "focus:border-ink focus:ring-2 focus:ring-ink/10"
 )
 TEXTAREA_CLS = (
-    "w-full border border-stone-200 rounded-[10px] min-h-[160px] px-4 py-3 bg-white outline-none resize-y "
-    "placeholder:text-stone-400 transition-colors duration-150 "
-    "focus:border-stone-700 focus:ring-2 focus:ring-stone-900/10"
+    "w-full border border-line/30 rounded-[10px] min-h-[160px] px-4 py-3 bg-paper-50 outline-none resize-y "
+    "placeholder:text-ink-mute transition-colors duration-150 "
+    "focus:border-ink focus:ring-2 focus:ring-ink/10"
 )
 SELECT_CLS = f"{INPUT_CLS} appearance-none pr-10 cursor-pointer"
 MESSAGE_MAX_LENGTH = 2000
@@ -73,10 +73,10 @@ class ContactForm(forms.ModelForm):
             # Красная рамка и доступные подсказки для полей с ошибками
             if self.errors.get(name):
                 cls = attrs.get("class", "")
-                if "border-stone-200" in cls:
-                    cls = cls.replace("border-stone-200", "border-red-400")
+                if "border-line/30" in cls:
+                    cls = cls.replace("border-line/30", "border-alert")
                 else:
-                    cls = f"{cls} border-red-400"
+                    cls = f"{cls} border-alert"
                 attrs["class"] = cls
                 attrs["aria-invalid"] = "true"
                 described_by.append(f"{self[name].id_for_label}-error")

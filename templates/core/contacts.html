@@ -1,118 +1,118 @@
 {% extends "base.html" %}
 {% block title %}Контакты — {{ artist_profile.name|default:"Художник" }}{% endblock %}
 {% block content %}
-<section class="bg-stone-50">
+<section class="bg-paper-200">
   <div class="max-w-5xl mx-auto px-4 py-8 md:py-12">
     <div class="max-w-2xl mb-10 md:mb-12">
       <h1 class="text-3xl md:text-4xl font-serif mb-6">Контакты</h1>
-      <p class="text-lg text-stone-500 leading-relaxed">
+      <p class="text-lg text-ink-soft leading-relaxed">
         Есть вопрос, хотите обсудить работу или узнать подробности?<br>Буду рада вашему сообщению.
       </p>
     </div>
 
     <div class="grid md:grid-cols-5 gap-6 items-start">
       <div class="md:col-span-2">
-        <div class="bg-white border border-stone-200 rounded-2xl p-6">
+        <div class="bg-paper-100 border border-line/30 rounded-2xl p-6">
           <h2 class="font-serif text-xl md:text-2xl mb-1">Способы связи</h2>
-            <p class="text-sm text-stone-500 mb-6">Выберите удобный способ, чтобы связаться со мной напрямую.</p>
+            <p class="text-sm text-ink-soft mb-6">Выберите удобный способ, чтобы связаться со мной напрямую.</p>
 
             {% if profile.email or profile.telegram %}
-            <div class="divide-y divide-stone-200">
+            <div class="divide-y divide-line/30">
               {% if profile.email %}
               <div class="contact-row flex items-start gap-4 py-4 first:pt-0 last:pb-0 last:border-0">
-                <span class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-200 text-stone-600" aria-hidden="true">
+                <span class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line/30 text-ink-soft" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
                 </span>
                 <div class="min-w-0 flex-1">
-                  <div class="text-sm font-medium text-stone-900">Электронная почта</div>
-                  <a href="mailto:{{ profile.email }}" data-copy-email="{{ profile.email }}" class="text-sm text-stone-600 break-all cursor-pointer transition hover:text-stone-900">{{ profile.email }}</a>
+                  <div class="text-sm font-medium text-ink">Электронная почта</div>
+                  <a href="mailto:{{ profile.email }}" data-copy-email="{{ profile.email }}" class="text-sm text-ink-soft break-all cursor-pointer transition hover:text-ink">{{ profile.email }}</a>
                 </div>
                 <div class="relative shrink-0">
-                  <button type="button" data-copy-email="{{ profile.email }}" class="flex h-9 w-9 items-center justify-center rounded-lg text-stone-500 transition hover:bg-stone-100 hover:text-stone-900" aria-label="Скопировать адрес почты" title="Скопировать">
+                  <button type="button" data-copy-email="{{ profile.email }}" class="flex h-9 w-9 items-center justify-center rounded-lg text-ink-soft transition hover:bg-paper-300 hover:text-ink" aria-label="Скопировать адрес почты" title="Скопировать">
                     <svg data-icon-copy width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     <svg data-icon-check class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
                     <span class="sr-only">Скопировать</span>
                   </button>
-                  <span data-copy-status role="status" aria-live="polite" class="pointer-events-none absolute right-0 top-full z-10 mt-1 hidden whitespace-nowrap rounded-md border border-stone-200 bg-white px-2 py-1 text-[11px] text-stone-600 shadow-sm">Адрес скопирован</span>
+                  <span data-copy-status role="status" aria-live="polite" class="pointer-events-none absolute right-0 top-full z-10 mt-1 hidden whitespace-nowrap rounded-md border border-line/30 bg-paper-100 px-2 py-1 text-[11px] text-ink-soft shadow-sm">Адрес скопирован</span>
                 </div>
               </div>
               {% endif %}
 
               {% if profile.telegram %}
               <a href="{{ profile.telegram }}" target="_blank" rel="noopener noreferrer" class="contact-row group flex items-start gap-4 py-4 first:pt-0 last:pb-0 last:border-0">
-                <span class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-200 text-stone-600 transition group-hover:border-stone-300 group-hover:text-stone-900" aria-hidden="true">
+                <span class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line/30 text-ink-soft transition group-hover:border-line/50 group-hover:text-ink" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
                 </span>
                 <div class="min-w-0 flex-1">
-                  <div class="text-sm font-medium transition group-hover:text-stone-900">Telegram</div>
-                  <div class="text-sm text-stone-500 break-all">@{{ profile.telegram|cut:"https://t.me/"|cut:"http://t.me/"|cut:"https://telegram.me/"|cut:"http://telegram.me/"|cut:"/" }}</div>
+                  <div class="text-sm font-medium transition group-hover:text-ink">Telegram</div>
+                  <div class="text-sm text-ink-soft break-all">@{{ profile.telegram|cut:"https://t.me/"|cut:"http://t.me/"|cut:"https://telegram.me/"|cut:"http://telegram.me/"|cut:"/" }}</div>
                 </div>
-                <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center text-stone-400 transition group-hover:translate-x-0.5 group-hover:text-stone-900" aria-hidden="true">
+                <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center text-ink-mute transition group-hover:translate-x-0.5 group-hover:text-ink" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                 </span>
               </a>
               {% endif %}
             </div>
 
-            <div class="mt-6 border-t border-stone-200 pt-6">
+            <div class="mt-6 border-t border-line/30 pt-6">
               <div class="flex items-start gap-3">
-                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-stone-200 text-stone-500" aria-hidden="true">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line/30 text-ink-soft" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </span>
-                <p class="text-xs text-stone-500 leading-relaxed">Обычно отвечаю в течение 1–2 дней.</p>
+                <p class="text-xs text-ink-soft leading-relaxed">Обычно отвечаю в течение 1–2 дней.</p>
               </div>
             </div>
             {% else %}
-            <p class="text-sm text-stone-500">Контакты скоро появятся. Пока напишите через форму.</p>
+            <p class="text-sm text-ink-soft">Контакты скоро появятся. Пока напишите через форму.</p>
             {% endif %}
         </div>
       </div>
 
       <div class="md:col-span-3">
-        <form id="contact-form" method="post" action="{% url 'core:contacts' %}#contact-form" class="scroll-mt-24 bg-white border border-stone-200 rounded-2xl p-6 space-y-5" aria-labelledby="contact-form-title">
+        <form id="contact-form" method="post" action="{% url 'core:contacts' %}#contact-form" class="scroll-mt-24 bg-paper-100 border border-line/30 rounded-2xl p-6 space-y-5" aria-labelledby="contact-form-title">
           <div class="mb-2">
             <h2 id="contact-form-title" class="font-serif text-xl md:text-2xl mb-1">Напишите мне</h2>
-            <p class="text-sm text-stone-500">Выберите тему обращения и опишите ваш вопрос. Я свяжусь с вами по указанному email.</p>
+            <p class="text-sm text-ink-soft">Выберите тему обращения и опишите ваш вопрос. Я свяжусь с вами по указанному email.</p>
           </div>
 
           {% csrf_token %}
           {% if artwork_title %}<input type="hidden" name="artwork" value="{{ artwork_title }}">{% endif %}
 
-          <div id="contact-success" tabindex="-1" class="hidden flex items-start gap-3 border border-stone-200 bg-stone-50 rounded-xl px-4 py-4 outline-none scroll-mt-24" role="status" aria-live="polite">
-            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-stone-300 text-stone-700" aria-hidden="true">
+          <div id="contact-success" tabindex="-1" class="hidden flex items-start gap-3 border border-line/30 bg-paper-200 rounded-xl px-4 py-4 outline-none scroll-mt-24" role="status" aria-live="polite">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line/45 text-ink" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
             </span>
             <div class="min-w-0">
               <div class="font-serif text-base mb-0.5">Сообщение отправлено</div>
-              <p class="text-sm text-stone-600">Благодарю за письмо. Я отвечу на указанный email в течение 1–2 дней.</p>
-              <a href="{% url 'core:contacts' %}#contact-form" class="mt-2 inline-block text-sm text-stone-500 underline underline-offset-4 transition hover:text-stone-900 hover:no-underline">Написать ещё</a>
+              <p class="text-sm text-ink-soft">Благодарю за письмо. Я отвечу на указанный email в течение 1–2 дней.</p>
+              <a href="{% url 'core:contacts' %}#contact-form" class="mt-2 inline-block text-sm text-ink-soft underline underline-offset-4 transition hover:text-ink hover:no-underline">Написать ещё</a>
             </div>
           </div>
 
           {% if sent %}
-          <div class="flex items-start gap-3 border border-stone-200 bg-stone-50 rounded-xl px-4 py-4">
-            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-stone-300 text-stone-700" aria-hidden="true">
+          <div class="flex items-start gap-3 border border-line/30 bg-paper-200 rounded-xl px-4 py-4">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line/45 text-ink" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
             </span>
             <div class="min-w-0">
               <div class="font-serif text-base mb-0.5">Сообщение отправлено</div>
-              <p class="text-sm text-stone-600">Благодарю за письмо. Я отвечу на указанный email в течение 1–2 дней.</p>
-              <a href="{% url 'core:contacts' %}#contact-form" class="mt-2 inline-block text-sm text-stone-500 underline underline-offset-4 transition hover:text-stone-900 hover:no-underline">Написать ещё</a>
+              <p class="text-sm text-ink-soft">Благодарю за письмо. Я отвечу на указанный email в течение 1–2 дней.</p>
+              <a href="{% url 'core:contacts' %}#contact-form" class="mt-2 inline-block text-sm text-ink-soft underline underline-offset-4 transition hover:text-ink hover:no-underline">Написать ещё</a>
             </div>
           </div>
           {% endif %}
 
           {% if artwork_title %}
-          <div class="flex items-center gap-2 text-sm border border-stone-200 bg-stone-50 rounded-xl px-3.5 py-2.5">
-            <svg class="w-4 h-4 shrink-0 text-stone-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>
+          <div class="flex items-center gap-2 text-sm border border-line/30 bg-paper-200 rounded-xl px-3.5 py-2.5">
+            <svg class="w-4 h-4 shrink-0 text-ink-soft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>
             <span class="min-w-0 break-words">О картине: <span class="font-medium">«{{ artwork_title }}»</span></span>
-            <a href="{% url 'core:contacts' %}#contact-form" class="ml-auto shrink-0 text-stone-500 underline hover:text-stone-900" aria-label="Убрать привязку к картине">Убрать</a>
+            <a href="{% url 'core:contacts' %}#contact-form" class="ml-auto shrink-0 text-ink-soft underline hover:text-ink" aria-label="Убрать привязку к картине">Убрать</a>
           </div>
           {% endif %}
 
-          <div id="form-errors" role="alert" tabindex="-1" class="text-sm text-stone-900 border border-stone-200 bg-stone-50 rounded-xl px-4 py-3 outline-none {% if not form.errors %}hidden{% endif %}">
+          <div id="form-errors" role="alert" tabindex="-1" class="text-sm text-ink border border-line/30 bg-paper-200 rounded-xl px-4 py-3 outline-none {% if not form.errors %}hidden{% endif %}">
             <div class="font-medium mb-1">Проверьте выделенные поля</div>
-            <ul class="list-disc pl-5 space-y-0.5 text-stone-600">
+            <ul class="list-disc pl-5 space-y-0.5 text-ink-soft">
               {% for field in form %}
                 {% for error in field.errors %}<li>{{ field.label }}: {{ error }}</li>{% endfor %}
               {% endfor %}
@@ -122,41 +122,41 @@
 
           <div class="grid gap-4 md:grid-cols-2">
             <div>
-              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-stone-500 mb-1.5" for="{{ form.name.id_for_label }}">{{ form.name.label }} <span class="text-stone-400" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
+              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-ink-soft mb-1.5" for="{{ form.name.id_for_label }}">{{ form.name.label }} <span class="text-ink-mute" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
               {{ form.name }}
-              <div id="{{ form.name.id_for_label }}-error" role="alert" class="text-sm text-red-600 mt-1 hidden" data-field-error="name"></div>
+              <div id="{{ form.name.id_for_label }}-error" role="alert" class="text-sm text-alert mt-1 hidden" data-field-error="name"></div>
             </div>
 
             <div>
-              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-stone-500 mb-1.5" for="{{ form.email.id_for_label }}">{{ form.email.label }} <span class="text-stone-400" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
+              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-ink-soft mb-1.5" for="{{ form.email.id_for_label }}">{{ form.email.label }} <span class="text-ink-mute" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
               {{ form.email }}
-              <div id="{{ form.email.id_for_label }}-error" role="alert" class="text-sm text-red-600 mt-1 hidden" data-field-error="email"></div>
+              <div id="{{ form.email.id_for_label }}-error" role="alert" class="text-sm text-alert mt-1 hidden" data-field-error="email"></div>
             </div>
           </div>
 
           <div>
             <div class="flex items-baseline justify-between gap-3 mb-1.5">
-              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-stone-500" for="{{ form.subject.id_for_label }}">{{ form.subject.label }}</label>
-              <span id="subject-hint" class="text-xs text-stone-400">необязательно</span>
+              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-ink-soft" for="{{ form.subject.id_for_label }}">{{ form.subject.label }}</label>
+              <span id="subject-hint" class="text-xs text-ink-mute">необязательно</span>
             </div>
             <div class="relative">
               {{ form.subject }}
-              <svg class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              <svg class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </div>
-            <div id="{{ form.subject.id_for_label }}-error" role="alert" class="text-sm text-red-600 mt-1 hidden" data-field-error="subject"></div>
+            <div id="{{ form.subject.id_for_label }}-error" role="alert" class="text-sm text-alert mt-1 hidden" data-field-error="subject"></div>
           </div>
 
           <div>
             <div class="flex items-baseline justify-between gap-3 mb-1.5">
-              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-stone-500" for="{{ form.message.id_for_label }}">{{ form.message.label }} <span class="text-stone-400" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
-              <span id="message-counter" data-counter class="text-xs text-stone-400 tabular-nums">{{ form.message.value|default_if_none:""|length }} / 2000</span>
+              <label class="block text-xs font-medium uppercase tracking-[0.12em] text-ink-soft" for="{{ form.message.id_for_label }}">{{ form.message.label }} <span class="text-ink-mute" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
+              <span id="message-counter" data-counter class="text-xs text-ink-mute tabular-nums">{{ form.message.value|default_if_none:""|length }} / 2000</span>
             </div>
             {{ form.message }}
-            <div id="{{ form.message.id_for_label }}-error" role="alert" class="text-sm text-red-600 mt-1 hidden" data-field-error="message"></div>
+            <div id="{{ form.message.id_for_label }}-error" role="alert" class="text-sm text-alert mt-1 hidden" data-field-error="message"></div>
           </div>
 
           <div class="pt-1">
-            <button type="submit" data-submit class="group inline-flex w-full sm:w-auto min-h-[44px] h-12 items-center justify-center gap-2 rounded-[9px] bg-stone-900 px-6 text-white transition-colors duration-200 hover:bg-stone-800 active:bg-stone-700 disabled:bg-stone-400 disabled:cursor-not-allowed">
+            <button type="submit" data-submit class="group inline-flex w-full sm:w-auto min-h-[44px] h-12 items-center justify-center gap-2 rounded-[9px] bg-ink px-6 text-paper-50 transition-colors duration-200 hover:bg-ink/90 active:bg-ink/80 disabled:bg-ink/40 disabled:cursor-not-allowed">
               <svg data-spinner class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4z"></path>
@@ -164,7 +164,7 @@
               <span data-submit-label>Отправить сообщение</span>
               <svg class="w-4 h-4 opacity-70 transition group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
             </button>
-            <p class="text-xs text-stone-400 mt-3">Поля, отмеченные <span aria-hidden="true">*</span>, обязательны.</p>
+            <p class="text-xs text-ink-mute mt-3">Поля, отмеченные <span aria-hidden="true">*</span>, обязательны.</p>
           </div>
         </form>
       </div>
@@ -173,5 +173,5 @@
 </section>
 {% endblock %}
 {% block extra_js %}
-<script src="/static/js/contacts.js?v=2"></script>
+<script src="/static/js/contacts.js?v=3"></script>
 {% endblock %}

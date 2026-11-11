@@ -99,8 +99,8 @@ function initMessageCounter() {
     if (counter) {
       const length = message.value.length;
       counter.textContent = `${length} / ${max}`;
-      counter.classList.toggle("text-red-600", length >= max);
-      counter.classList.toggle("text-stone-400", length < max);
+      counter.classList.toggle("text-alert", length >= max);
+      counter.classList.toggle("text-ink-mute", length < max);
     }
     resize();
   }
@@ -127,8 +127,8 @@ function initAjaxSubmit() {
     form.querySelectorAll('[aria-invalid="true"]').forEach((el) => {
       el.removeAttribute("aria-invalid");
     });
-    form.querySelectorAll(".border-red-400").forEach((el) => {
-      el.classList.remove("border-red-400");
+    form.querySelectorAll(".border-alert").forEach((el) => {
+      el.classList.remove("border-alert");
     });
     if (errorsBox) errorsBox.classList.add("hidden");
   }
@@ -142,7 +142,7 @@ function initAjaxSubmit() {
     }
     if (input) {
       input.setAttribute("aria-invalid", "true");
-      input.classList.add("border-red-400");
+      input.classList.add("border-alert");
     }
   }
 

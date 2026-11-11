@@ -70,4 +70,4 @@ class CorePagesTests(TestCase):
             with self.subTest(name=name):
                 resp = self.client.get(reverse(name))
                 self.assertEqual(resp.status_code, 200)
-                self.assertContains(resp, "bg-stone-900 text-white")
+                self.assertContains(resp, "bg-ink text-paper-50")

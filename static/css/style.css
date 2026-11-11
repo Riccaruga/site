@@ -4,7 +4,7 @@ body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -w
 .font-serif { font-family: Georgia, "Times New Roman", serif; }
 img { max-width: 100%; height: auto; }
 img[data-lightbox] { transition: opacity .2s; touch-action: manipulation; }
-.thumb.selected { outline: 2px solid #1c1917; }
+.thumb.selected { outline: 2px solid #33312A; }
 .thumb { min-height: 44px; }
 /* Закрыть бургер по клику вне — нативно через <details>, плюс крупный тап */
 details summary::-webkit-details-marker { display: none; }
@@ -13,10 +13,15 @@ details summary { list-style: none; }
 input, textarea, select { font-size: 16px; max-width: 100%; }
 button, .btn, summary { min-height: 44px; }
 a { overflow-wrap: break-word; }
+/* Ошибки полей: кирпичная рамка (класс добавляется из JS, CDN его не генерирует) */
+.border-alert,
+input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"] {
+  border-color: #8A4B3F !important;
+}
 /* Видимый фокус для клавиатуры */
 a:focus-visible, button:focus-visible, summary:focus-visible,
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 2px solid #1c1917; outline-offset: 2px;
+  outline: 2px solid #33312A; outline-offset: 2px;
 }
 textarea { resize: vertical; }
 @media (prefers-reduced-motion: reduce) {

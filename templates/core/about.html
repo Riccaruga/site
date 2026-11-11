@@ -8,10 +8,10 @@
       {% if profile.photo %}
       <img src="{{ profile.photo.url }}" alt="{{ profile.name }}" class="rounded shadow w-full object-cover">
       {% else %}
-      <div class="rounded bg-stone-200 aspect-[3/4] flex items-center justify-center text-stone-500">Фото</div>
+      <div class="rounded bg-paper-300 aspect-[3/4] flex items-center justify-center text-ink-soft">Фото</div>
       {% endif %}
       {% if profile.cv_file %}
-      <a href="{{ profile.cv_file.url }}" class="mt-4 inline-block border px-4 py-2 rounded hover:bg-stone-100" download>Скачать CV (PDF)</a>
+      <a href="{{ profile.cv_file.url }}" class="mt-4 inline-block border px-4 py-2 rounded hover:bg-paper-300" download>Скачать CV (PDF)</a>
       {% endif %}
     </div>
     <div class="md:col-span-2 prose max-w-none">
