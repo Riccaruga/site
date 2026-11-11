@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -27,6 +28,10 @@ def contacts(request):
         else request.GET.get("artwork")
     )
     artwork_title = (raw_artwork or "").strip()
+    is_json = (
+        request.headers.get("Accept", "") == "application/json"
+        or request.headers.get("X-Requested-With") == "XMLHttpRequest"
+    )
 
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -51,8 +56,16 @@ def contacts(request):
                 )
             except Exception:
                 pass
+            if is_json:
+                return JsonResponse({"ok": True})
             # Успех показываем внутри карточки формы
             return redirect(f"{reverse('core:contacts')}?sent=1#contact-form")
+        else:
+            if is_json:
+                return JsonResponse(
+                    {"ok": False, "errors": form.errors.get_json_data()},
+                    status=400,
+                )
     else:
         # Предзаполнение если пришли с картины ?artwork=...
         initial = {}

@@ -3,8 +3,13 @@ from django import forms
 from .models import ContactMessage
 
 INPUT_CLS = (
-    "w-full border border-stone-300 rounded-xl px-3.5 py-2.5 bg-white outline-none "
-    "placeholder:text-stone-400 transition "
+    "w-full border border-stone-200 rounded-[10px] h-[52px] px-4 bg-white outline-none "
+    "placeholder:text-stone-400 transition-colors duration-150 "
+    "focus:border-stone-700 focus:ring-2 focus:ring-stone-900/10"
+)
+TEXTAREA_CLS = (
+    "w-full border border-stone-200 rounded-[10px] min-h-[160px] px-4 py-3 bg-white outline-none resize-y "
+    "placeholder:text-stone-400 transition-colors duration-150 "
     "focus:border-stone-700 focus:ring-2 focus:ring-stone-900/10"
 )
 SELECT_CLS = f"{INPUT_CLS} appearance-none pr-10 cursor-pointer"
@@ -26,9 +31,9 @@ class ContactForm(forms.ModelForm):
         label="Сообщение",
         max_length=MESSAGE_MAX_LENGTH,
         widget=forms.Textarea(attrs={
-            "class": INPUT_CLS,
+            "class": TEXTAREA_CLS,
             "rows": 5,
-            "placeholder": "Расскажите, что вас заинтересовало...",
+            "placeholder": "Расскажите, что вас интересует...",
         }),
     )
 
@@ -68,10 +73,10 @@ class ContactForm(forms.ModelForm):
             # Красная рамка и доступные подсказки для полей с ошибками
             if self.errors.get(name):
                 cls = attrs.get("class", "")
-                if "border-stone-300" in cls:
-                    cls = cls.replace("border-stone-300", "border-red-500")
+                if "border-stone-200" in cls:
+                    cls = cls.replace("border-stone-200", "border-red-400")
                 else:
-                    cls = f"{cls} border-red-500"
+                    cls = f"{cls} border-red-400"
                 attrs["class"] = cls
                 attrs["aria-invalid"] = "true"
                 described_by.append(f"{self[name].id_for_label}-error")
