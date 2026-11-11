@@ -3,27 +3,38 @@ from django import forms
 from .models import ContactMessage
 
 INPUT_CLS = (
-    "w-full border border-stone-300 rounded-lg px-4 py-3 bg-white outline-none "
+    "w-full border border-stone-300 rounded-xl px-3.5 py-2.5 bg-white outline-none "
     "placeholder:text-stone-400 transition "
-    "focus:ring-2 focus:ring-stone-900/15 focus:border-stone-900"
+    "focus:border-stone-700 focus:ring-2 focus:ring-stone-900/10"
 )
+SELECT_CLS = f"{INPUT_CLS} appearance-none pr-10 cursor-pointer"
 MESSAGE_MAX_LENGTH = 2000
+SUBJECT_CHOICES = [("", "Выберите тему"), *ContactMessage.Subject.choices]
 
 
 class ContactForm(forms.ModelForm):
+    subject = forms.ChoiceField(
+        label="Тема обращения",
+        required=False,
+        choices=SUBJECT_CHOICES,
+        widget=forms.Select(attrs={
+            "class": SELECT_CLS,
+            "aria-describedby": "subject-hint",
+        }),
+    )
     message = forms.CharField(
         label="Сообщение",
         max_length=MESSAGE_MAX_LENGTH,
         widget=forms.Textarea(attrs={
             "class": INPUT_CLS,
-            "rows": 6,
-            "placeholder": "Расскажите, какая картина интересует...",
+            "rows": 5,
+            "placeholder": "Расскажите, что вас заинтересовало...",
         }),
     )
 
     class Meta:
         model = ContactMessage
-        fields = ["name", "email", "message"]
+        fields = ["name", "email", "subject", "message"]
         widgets = {
             "name": forms.TextInput(attrs={
                 "class": INPUT_CLS,
@@ -50,7 +61,7 @@ class ContactForm(forms.ModelForm):
                 attrs["required"] = True
                 attrs["aria-required"] = "true"
 
-            described_by = []
+            described_by = attrs.get("aria-describedby", "").split()
             if name == "message":
                 described_by.append("message-counter")
 

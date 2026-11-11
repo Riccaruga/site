@@ -30,8 +30,18 @@ class ArtistProfile(models.Model):
 
 
 class ContactMessage(models.Model):
+    class Subject(models.TextChoices):
+        PURCHASE = "purchase", "Покупка картины"
+        PRICE = "price", "Вопрос о стоимости"
+        DELIVERY = "delivery", "Вопрос о доставке"
+        COLLABORATION = "collaboration", "Сотрудничество"
+        OTHER = "other", "Другой вопрос"
+
     name = models.CharField("Имя", max_length=120)
     email = models.EmailField("Email")
+    subject = models.CharField(
+        "Тема обращения", max_length=32, choices=Subject.choices, blank=True
+    )
     message = models.TextField("Сообщение")
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     is_read = models.BooleanField("Прочитано", default=False)

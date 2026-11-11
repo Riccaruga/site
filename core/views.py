@@ -34,9 +34,13 @@ def contacts(request):
             msg = form.save()
             # Уведомление на почту (в dev уходит в консоль)
             recipient = getattr(profile, "email", "") or settings.CONTACT_EMAIL
-            body = f"От: {msg.name} <{msg.email}>\n\n{msg.message}"
+            body = f"От: {msg.name} <{msg.email}>"
+            topic = msg.get_subject_display()
+            if topic:
+                body += f"\nТема: {topic}"
             if artwork_title:
-                body = f"Картина: «{artwork_title}»\n\n{body}"
+                body += f"\nКартина: «{artwork_title}»"
+            body += f"\n\n{msg.message}"
             try:
                 send_mail(
                     subject=f"Сообщение с сайта от {msg.name}",

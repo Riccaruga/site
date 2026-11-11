@@ -17,11 +17,11 @@ class ArtistProfileAdmin(admin.ModelAdmin):
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "short_message", "created_at", "is_read")
-    list_filter = ("is_read",)
+    list_display = ("name", "email", "subject", "short_message", "created_at", "is_read")
+    list_filter = ("is_read", "subject")
     search_fields = ("name", "email", "message")
     list_editable = ("is_read",)
-    readonly_fields = ("name", "email", "message", "created_at")
+    readonly_fields = ("name", "email", "subject", "message", "created_at")
 
     @admin.display(description="Сообщение")
     def short_message(self, obj):
