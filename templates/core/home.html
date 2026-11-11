@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{% if profile and profile.meta_title %}{{ profile.meta_title }}{% elif profile %}{{ profile.name }}{% else %}Художник — живопись{% endif %}{% endblock %}
 {% block content %}
-<section class="max-w-6xl mx-auto px-4 py-8 md:py-12">
+<section class="max-w-5xl mx-auto px-4 py-8 md:py-12">
   <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
     <div>
       <h1 class="text-3xl md:text-5xl font-serif mb-4 break-words">{% if profile %}{{ profile.name }}{% else %}Художник{% endif %}</h1>

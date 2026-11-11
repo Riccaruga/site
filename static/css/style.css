@@ -1,4 +1,5 @@
-html, body { overflow-x: hidden; }
+html { overflow-x: hidden; overflow-y: scroll; scrollbar-gutter: stable; }
+body { overflow-x: hidden; }
 body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
 .font-serif { font-family: Georgia, "Times New Roman", serif; }
 img { max-width: 100%; height: auto; }
