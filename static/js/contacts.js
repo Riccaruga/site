@@ -166,27 +166,30 @@ function initAjaxSubmit() {
     if (spinner) spinner.classList.toggle("hidden", !loading);
   }
 
-  let successShown = false;
-
   function showSuccess() {
-    successShown = true;
-    btn.disabled = true;
-    btn.classList.add("opacity-60", "cursor-not-allowed");
-    if (label) label.textContent = "Сообщение отправлено ✓";
-    if (successPanel) successPanel.classList.remove("hidden");
-    form.classList.add("opacity-0");
-    setTimeout(() => form.classList.add("hidden"), 200);
-    if (successPanel) successPanel.focus();
+    setLoading(false);
+    if (successPanel) {
+      successPanel.classList.remove("hidden");
+      successPanel.focus();
+    }
   }
 
   function resetFormState() {
-    successShown = false;
     setLoading(false);
-    btn.disabled = false;
-    btn.classList.remove("opacity-60", "cursor-not-allowed");
-    if (label) label.textContent = "Отправить сообщение";
     if (successPanel) successPanel.classList.add("hidden");
-    form.classList.remove("opacity-0", "hidden");
+  }
+
+  // «Написать ещё»: просто скрываем подтверждение и возвращаемся к полям
+  if (successPanel) {
+    const again = successPanel.querySelector("a");
+    if (again) {
+      again.addEventListener("click", (e) => {
+        e.preventDefault();
+        successPanel.classList.add("hidden");
+        const nameField = form.querySelector("#id_name");
+        if (nameField) nameField.focus();
+      });
+    }
   }
 
   form.addEventListener("submit", async (e) => {
@@ -270,7 +273,7 @@ function initAjaxSubmit() {
     } catch (err) {
       showGeneralError("Не удалось отправить сообщение. Попробуйте ещё раз.");
     } finally {
-      if (!successShown) setLoading(false);
+      setLoading(false);
     }
   });
 

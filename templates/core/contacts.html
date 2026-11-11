@@ -13,7 +13,7 @@
     <div class="grid md:grid-cols-5 gap-6 items-start">
       <div class="md:col-span-2">
         <div class="bg-white border border-stone-200 rounded-2xl p-6">
-          <h2 class="font-serif text-xl md:text-2xl mb-1">Другие способы связи</h2>
+          <h2 class="font-serif text-xl md:text-2xl mb-1">Способы связи</h2>
             <p class="text-sm text-stone-500 mb-6">Выберите удобный способ, чтобы связаться со мной напрямую.</p>
 
             {% if profile.email or profile.telegram %}
@@ -78,7 +78,7 @@
           {% csrf_token %}
           {% if artwork_title %}<input type="hidden" name="artwork" value="{{ artwork_title }}">{% endif %}
 
-          <div id="contact-success" class="hidden flex items-start gap-3 border border-stone-200 bg-stone-50 rounded-xl px-4 py-4" role="status" aria-live="polite">
+          <div id="contact-success" tabindex="-1" class="hidden flex items-start gap-3 border border-stone-200 bg-stone-50 rounded-xl px-4 py-4 outline-none scroll-mt-24" role="status" aria-live="polite">
             <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-stone-300 text-stone-700" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
             </span>
@@ -173,5 +173,5 @@
 </section>
 {% endblock %}
 {% block extra_js %}
-<script src="/static/js/contacts.js"></script>
+<script src="/static/js/contacts.js?v=2"></script>
 {% endblock %}
