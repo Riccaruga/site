@@ -31,9 +31,9 @@ class ArtistProfile(models.Model):
 
 class ContactMessage(models.Model):
     class Subject(models.TextChoices):
-        PURCHASE = "purchase", "Покупка картины"
-        PRICE = "price", "Вопрос о стоимости"
-        DELIVERY = "delivery", "Вопрос о доставке"
+        GENERAL = "general", "Общий вопрос"
+        PURCHASE = "purchase", "Заказ / покупка"
+        PRICE = "price", "Стоимость услуг"
         COLLABORATION = "collaboration", "Сотрудничество"
         OTHER = "other", "Другой вопрос"
 

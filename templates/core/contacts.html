@@ -7,15 +7,14 @@
       <p class="text-xs font-medium uppercase tracking-[0.18em] text-stone-500 mb-3">ОБРАТНАЯ СВЯЗЬ</p>
       <h1 class="text-3xl md:text-4xl font-serif mb-4 leading-tight">Контакты</h1>
       <p class="text-lg text-stone-500 leading-relaxed">
-        Есть вопрос, хотите обсудить работу или узнать подробности? Буду рада вашему сообщению.
+        Есть вопрос, хотите обсудить работу или узнать подробности?<br>Буду рада вашему сообщению.
       </p>
     </div>
 
-    <div class="grid md:grid-cols-5 gap-6 items-stretch">
+    <div class="grid md:grid-cols-5 gap-6 items-start">
       <div class="md:col-span-2">
-        <div class="bg-white border border-stone-200 rounded-2xl p-6 flex flex-col h-full">
-          <div class="flex-1">
-            <h2 class="font-serif text-xl md:text-2xl mb-1">Другие способы связи</h2>
+        <div class="bg-white border border-stone-200 rounded-2xl p-6">
+          <h2 class="font-serif text-xl md:text-2xl mb-1">Другие способы связи</h2>
             <p class="text-sm text-stone-500 mb-6">Выберите удобный способ, чтобы связаться со мной напрямую.</p>
 
             {% if profile.email or profile.telegram %}
@@ -67,7 +66,6 @@
             {% else %}
             <p class="text-sm text-stone-500">Контакты скоро появятся. Пока напишите через форму.</p>
             {% endif %}
-          </div>
         </div>
       </div>
 
@@ -75,7 +73,7 @@
         <form id="contact-form" method="post" action="{% url 'core:contacts' %}#contact-form" class="scroll-mt-24 bg-white border border-stone-200 rounded-2xl p-6 space-y-5" aria-labelledby="contact-form-title">
           <div class="mb-2">
             <h2 id="contact-form-title" class="font-serif text-xl md:text-2xl mb-1">Напишите мне</h2>
-            <p class="text-sm text-stone-500">Буду рада вашему сообщению. Расскажите, что вас заинтересовало</p>
+            <p class="text-sm text-stone-500">Выберите тему обращения и опишите ваш вопрос. Я свяжусь с вами по указанному email.</p>
           </div>
 
           {% csrf_token %}
@@ -123,7 +121,7 @@
             </ul>
           </div>
 
-          <div class="grid gap-4 sm:grid-cols-2">
+          <div class="grid gap-4 md:grid-cols-2">
             <div>
               <label class="block text-xs font-medium uppercase tracking-[0.12em] text-stone-500 mb-1.5" for="{{ form.name.id_for_label }}">{{ form.name.label }} <span class="text-stone-400" aria-hidden="true">*</span><span class="sr-only"> (обязательное поле)</span></label>
               {{ form.name }}
