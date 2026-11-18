@@ -4,7 +4,7 @@
 <section class="max-w-5xl mx-auto px-4 py-8 md:py-12">
   <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
     <div>
-      <h1 class="text-3xl md:text-5xl font-serif mb-4 break-words">{% if profile %}{{ profile.name }}{% else %}Художник{% endif %}</h1>
+      <h1 class="text-2xl sm:text-3xl md:text-3xl lg:text-[44px] font-serif mb-4 break-words">{% if profile %}{{ profile.name }}{% else %}Художник{% endif %}</h1>
       <p class="text-base md:text-lg text-ink-soft mb-6 break-words">{% if profile and profile.statement %}{{ profile.statement|truncatewords:30 }}{% else %}Живопись — пейзажи, портреты, натюрморты.{% endif %}</p>
       <div class="flex flex-col sm:flex-row gap-3">
         <a href="{% url 'gallery:list' %}" class="bg-ink text-paper-50 px-6 py-3 rounded hover:bg-ink/90 text-center min-h-[44px] flex items-center justify-center">Смотреть галерею</a>
